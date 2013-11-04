@@ -1,0 +1,31 @@
+<html>
+<head>
+	<link href="static/styles/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="static/styles/styles.css" rel="stylesheet" media="screen">
+</head>
+<body>
+	<div class="navbar">
+    	<div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/add">Add Events</a></li>
+                <li><a href="/search">Event Search</a></li>
+                <li><a href="#">My Event List</a></li>
+                <li><a href="#">Something Else</a></li>
+              </ul>
+           </div>
+        </div>
+    </div><!-- /.navbar -->
+
+    <div class="container">
+    	{% block content %}
+    	{% endblock %}
+    </div>
+
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script src="static/styles/bootstrap/js/bootstrap.min.js"></script>
+	<script src="static/scripts/utils.js"></script>
+</body>
+</html>
