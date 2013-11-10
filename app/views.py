@@ -6,7 +6,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm
+from forms import LoginForm, EditProfileForm
 from models import User, ROLE_USER, ROLE_ADMIN
 
 @lm.user_loader
@@ -26,12 +26,42 @@ def index(signed_in=False):
 	url_for('static', filename='styles/styles.css')
 	return render_template('index.html')
 
-#Profile page
-@app.route('/profile')
-def profile():
-    return render_template('index.html')
+#Profile Pages
+
+@app.route('/profile/<user_id>')
+@login_required
+def profile(user_id):
+	user = User.query.filter_by(_id = int(user_id)).first()
+	if (user == None):
+		flash('User not found')
+		return redirect(url_for('notfound'))
+	return render_template('profile.html', user=user)
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+	form = EditProfileForm()
+	if(form.validate_on_submit()):
+		g.user.email = form.email.data
+		g.user.fname = form.fname.data
+		g.user.lname = form.lname.data
+		g.user.school = form.school.data
+		g.user.sex = form.sex.data
+		db.session.add(g.user)
+		db.session.commit()
+		flash('Your changes have been saved')
+		return redirect(url_for('edit_profile'))
+	else:
+		form.email.data = g.user.email
+		form.fname.data = g.user.fname
+		form.lname.data = g.user.lname
+		form.school.data = g.user.school
+		form.sex.data = g.user.sex
+	return render_template('edit_profile.html', form=form)
+
 
 #Add Events page
+
 @app.route('/add')
 def add():
     return render_template('index.html')
