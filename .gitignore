@@ -37,4 +37,6 @@ nosetests.xml
 .pydevproject
 
 extras
+extras/*
 venv
+venv/*
