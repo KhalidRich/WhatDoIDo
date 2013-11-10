@@ -25,7 +25,7 @@ class User(db.Model):
 	def is_authenticated(self):
 		return True
 
-	def is_anon(self):
+	def is_anonymous(self):
 		return False
 
 	def is_active(self):

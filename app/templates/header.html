@@ -18,7 +18,7 @@
 
 
 				<div class="sign-in-out-up">
-					{% if signed_in %}
+					{% if g.user.is_authenticated() %}
 					<button type="button" class="btn btn-lg btn-danger" onclick="window.location='/signout'">Sign Out</button>
 
 					{% else %}
