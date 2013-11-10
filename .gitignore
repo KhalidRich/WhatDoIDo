@@ -40,3 +40,5 @@ extras
 extras/*
 venv
 venv/*
+tmp
+tmp/*
