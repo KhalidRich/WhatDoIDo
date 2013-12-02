@@ -6,7 +6,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditProfileForm
+from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventForm
 from models import User, ROLE_USER, ROLE_ADMIN
 
 @lm.user_loader
@@ -59,17 +59,17 @@ def edit_profile():
 		form.sex.data = g.user.sex
 	return render_template('edit_profile.html', form=form)
 
-
 #Add Events page
-
-@app.route('/add')
-def add():
-    return render_template('index.html')
+@app.route('/add_event')
+def add_event():
+	form = AddEventForm()
+	return render_template('add_event.html', form=form, user=g.user)
 
 @app.route('/details/<event_id>')
 def details(event_id):
     return render_template('index.html')
 
+#Signup and signin pages
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if(request.method == 'GET'):
@@ -82,17 +82,32 @@ def signup():
     else:
         return render_template('error404.html')
 
+@app.route('/register', methods=['POST'])
+def register():
+	if session.get('signed_in'):
+		redirect(url_for('index'))
+	print request
+	form = request.form
+	if form is None:
+		return render_template('error404.html')
+	user = User(email=form['email'], fname=form['fname'], lname=form['lname'], school=form['school'], password=form['pwd'])
+	db.session.add(user)
+	db.session.commit()
+	return redirect(url_for('index'))
+
 @app.route('/signin', methods=['GET', 'POST'])
 @oid.loginhandler
 def signin():
+	url_for('static', filename='styles/styles.css')
+	url_for('static', filename='styles/bootstrap/css/bootstrap.min.css')
 	if g.user is not None and g.user.is_authenticated():
 		return redirect(url_for('index'))
-
 	form = LoginForm()
+	custom_form = CustomRegistrationForm()
 	if (form.validate_on_submit()):
 		session['remember_me'] = form.remember_me.data
 		return oid.try_login(form.openid.data, ask_for=['email'])
-	return render_template('signin.html', title='Sign In', form=form, providers=app.config['OPENID_PROVIDERS'])
+	return render_template('signin.html', title='Sign In', form=form, custom_form=custom_form, providers=app.config['OPENID_PROVIDERS'])
 
 @oid.after_login
 def after_login(resp):

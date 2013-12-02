@@ -18,6 +18,7 @@ class User(db.Model):
 	school = db.Column(db.String(25))
 	sex = db.Column(db.SmallInteger)
 	role = db.Column(db.SmallInteger, default=ROLE_USER)
+	password = db.Column(db.String(25))
 
 	def get_id(self):
 		return unicode(self._id)
@@ -39,5 +40,36 @@ class Event(db.Model):
 	time_start = db.Column(db.String(5))
 	time_end = db.Column(db.String(5))
 	date = db.Column(db.String(11))
+	capacity = db.Column(db.Integer)
+	attending = db.Column(db.Integer)
 
-# User
+	def get_id(self):
+		return unicode(self._id)
+
+	def get_hosted_by(self):
+		return unicode(self.hosted_by)
+
+	def is_available_for_registration(self):
+		return self.capacity == self.attending
+
+	def add_registered_user(self):
+		self.attending += 1
+
+	def delete_registered_user(self):
+		if self.attending > 0:
+			self.attending -= 1
+
+	def edit_capacity(self, cap):
+		self.capacity = cap
+
+class AttendanceRelation(db.Model):
+	event_id = db.Column(db.Integer, db.ForeignKey('event._id'), primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user._id'), primary_key=True)
+	attending = db.Column(db.Integer)
+	relevant = db.Column(db.Integer)
+
+	def is_attending(self):
+		return self.attending
+
+	def is_relevant(self):
+		return self.relevant

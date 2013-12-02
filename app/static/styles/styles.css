@@ -1,17 +1,17 @@
-body{
+/*body{
 	background-color: #3F9DBA;
-}
+}*/
 
-.main-container{
+/*.main-container{
 	border-top: 60px;
 	border-left: 120px;
 	border-right: 120px;
 	border-bottom: 60px;
-}
+}*/
 
-.info{
+/*.info{
 	background-color: #FFFEE1;
-}
+}*/
 
 .sign-in-out-up{
 	float:right;

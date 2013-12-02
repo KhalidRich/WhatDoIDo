@@ -1,0 +1,50 @@
+<!-- Add Events Page -->
+{% extends "header.html" %}
+{% block content %}
+
+<div class="row">
+	<h1> Add an Event</h1>
+	<caption> Events are the heart of WhatDoIDo. If you'd liek people to attend your wonderful events, here's the page to add 'em</caption>
+
+	<form action="" method="post" name="addevent">
+		{{form.hidden_tag()}}
+		<table>
+			<tr>
+				<td>Title:</td>
+				<td>{{form.title(size=48)}}</td>
+			</tr>
+
+			<tr>
+				<td>Description:</td>
+				<td>{{form.description(size=48)}}</td>
+			</tr>
+
+			<tr>
+				<td>Start Date:</td>
+				<td>{{form.start_date(size=48)}}</td>
+			</tr>
+
+			<tr>
+				<td>End Date:</td>
+				<td>{{form.end_date(size=48)}}</td>
+			</tr>
+
+			<tr>
+				<td>Facebook Link:</td>
+				<td>{{form.fb_link(size=255)}}</td>
+			</tr>
+
+			<tr>
+				<td>Capacity:</td>
+				<td>{{form.capacity(size=10)}}</td>
+			</tr>
+
+			<tr>
+				<td style="visibility:hidden">Hosted By:</td>
+				<td>{{form.capacity(size=10, style="visibility:hidden")}}</td>
+			</tr>
+		</table>
+
+		<input type="submit" value="Create Event" class="btn btn-success" />
+</div>
+{% endblock %}
