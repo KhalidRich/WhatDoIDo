@@ -6,7 +6,7 @@
 	<h1> Add an Event</h1>
 	<caption> Events are the heart of WhatDoIDo. If you'd liek people to attend your wonderful events, here's the page to add 'em</caption>
 
-	<form action="" method="post" name="addevent">
+	<form action="/add_event" method="post" name="addevent">
 		{{form.hidden_tag()}}
 		<table>
 			<tr>
@@ -20,13 +20,18 @@
 			</tr>
 
 			<tr>
-				<td>Start Date:</td>
-				<td>{{form.start_date(size=48)}}</td>
+				<td>Date:</td>
+				<td>{{form.date(size=48)}}</td>
 			</tr>
 
 			<tr>
-				<td>End Date:</td>
-				<td>{{form.end_date(size=48)}}</td>
+				<td>Start Time:</td>
+				<td>{{form.start_time(size=48)}}</td>
+			</tr>
+
+			<tr>
+				<td>End Time:</td>
+				<td>{{form.end_time(size=48)}}</td>
 			</tr>
 
 			<tr>

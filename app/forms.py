@@ -6,6 +6,11 @@ class LoginForm(Form):
     openid = TextField('openid')
     remember_me = BooleanField('remember_me', default = False)
 
+class CustomLoginForm(Form):
+	email = TextField('email', validators = [Required()])
+	password = TextField('pwd', validators = [Required()])
+	remember_me = BooleanField('remember_me', default = False)
+
 class CustomRegistrationForm(Form):
 	email = TextField('email', validators = [Required()])
 	fname = TextField('fname', validators = [Required(), Length(max=120)])
@@ -24,9 +29,9 @@ class EditProfileForm(Form):
 class AddEventForm(Form):
 	title = TextField('title', validators = [Required()])
 	description = TextField('description', validators=[Required()])
-	start_date = TextField('start_date', validators=[Required()])
-	end_date = TextField('end_date', validators=[Required()])
+	date = TextField('date', validators=[Required()])
+	start_time = TextField('start_time', validators=[Required()])
+	end_time = TextField('end_time', validators=[Required()])
 	fb_link = TextField('fb_link', validators=[Required()])
 	capacity = TextField('capacity', validators=[Required()])
 	hosted_by = TextField('hosted_by', validators=[Required()])
-

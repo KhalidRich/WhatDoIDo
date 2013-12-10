@@ -6,8 +6,8 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventForm
-from models import User, ROLE_USER, ROLE_ADMIN
+from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventForm, CustomLoginForm
+from models import User, Event, ROLE_USER, ROLE_ADMIN
 
 @lm.user_loader
 def load_user(id):
@@ -60,10 +60,23 @@ def edit_profile():
 	return render_template('edit_profile.html', form=form)
 
 #Add Events page
-@app.route('/add_event')
+@app.route('/add_event', methods=['GET', 'POST'])
 def add_event():
-	form = AddEventForm()
-	return render_template('add_event.html', form=form, user=g.user)
+	if request.method == 'GET':
+		#generate form
+		form = AddEventForm()
+		return render_template('add_event.html', form=form, user=g.user)
+	elif request.method == 'POST':
+		#add the new event; redirect to the event add form with message "Your event has been added"
+		form = request.form
+		event = Event(title=form['title'], hosted_by=g.user._id, desc=form['description'], time_start=form['start_time'],
+			time_end=form['end_time'], date=form['date'], capacity=form['capacity'], attending=0)
+		db.session.add(event)
+		db.session.commit()
+		new_form = AddEventForm()
+		return render_template('add_event.html', form=new_form, message="Your event has been properly added")
+	else:
+		return render_template('error404.html')
 
 @app.route('/details/<event_id>')
 def details(event_id):
@@ -93,6 +106,7 @@ def register():
 	user = User(email=form['email'], fname=form['fname'], lname=form['lname'], school=form['school'], password=form['pwd'])
 	db.session.add(user)
 	db.session.commit()
+	login_user(user)
 	return redirect(url_for('index'))
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -125,6 +139,21 @@ def after_login(resp):
         session.pop('remember_me', None)
     login_user(user, remember = remember_me)
     return redirect(request.args.get('next') or url_for('index'))
+
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+	if request.method == 'GET':
+		form = CustomLoginForm()
+		return render_template('login.html', title='Log In', form = form)
+	else:
+		form = request.form
+		user = User.query.filter_by(email=form['email'], password=form['pwd']).first()
+		if user is None:
+			error_msg = "Sorry, the login credentials are incorrect. Please try again."
+			return render_template('login.html', form=CustomLoginForm(), error_msg=error_msg)
+		login_user(user, remember = form['remember_me'])
+		return redirect('index.html', username = user.fname)
 
 @app.route('/signout')
 def signout():
