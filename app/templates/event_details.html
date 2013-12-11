@@ -1,0 +1,27 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<header>{{event.title}}</header>
+
+<div class="row">
+	<div class="col-md-6">
+		<i>Here's some event details:</i>
+		<b>Event Description:</b>
+		{{event.desc}}
+		<br><br>
+	</div>
+
+	<div class="col-md-6">
+		<b>Event Time: </b>
+		{{event.time_start}}
+		<br><br>
+		<b>Event End: </b>
+		{{event.time_end}}
+		<br><br>
+		<b>Current Event Occupancy</b>
+		{{event.attending}} / {{event.capacity}}
+	</div>
+</div>
+
+{% endblock %}

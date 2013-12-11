@@ -66,7 +66,7 @@ def add_event():
 	elif request.method == 'POST':
 		#add the new event; redirect to the event add form with message "Your event has been added"
 		form = request.form
-		event = Event(title=form['title'], hosted_by=g.user._id, desc=form['description'], time_start=form['start_time'],
+		event = Event(title=form['title'], _id=Event.query.count() + 1, hosted_by=g.user._id, desc=form['description'], time_start=form['start_time'],
 			time_end=form['end_time'], date=form['date'], capacity=form['capacity'], attending=0)
 		db.session.add(event)
 		db.session.commit()
@@ -77,7 +77,12 @@ def add_event():
 
 @app.route('/details/<event_id>')
 def details(event_id):
-    return render_template('index.html')
+	url_for('static', filename='styles/styles.css')
+	event = Event.query.filter_by(_id=event_id).first()
+	if event is None:
+		return render_template('error404.html')
+	else:
+		return render_template('event_details.html', event=event)
 
 #Signup and signin pages
 @app.route('/signup', methods=['GET', 'POST'])
@@ -86,7 +91,6 @@ def signup():
         url_for('static', filename='styles/styles.css')
         return render_template('signup.html')
     elif (request.method == 'POST'):
-        #user_db.register_new_user(request.form)
         url_for('static', filename='styles/styles.css')
         return redirect('/True')
     else:
@@ -113,7 +117,6 @@ def login():
 		return render_template('login.html', title='Log In', form = form)
 	else:
 		form = request.form
-		print form.keys()
 		user = User.query.filter_by(email=form['email'], password=form['password']).first()
 		if user is None:
 			error_msg = "Sorry, the login credentials are incorrect. Please try again."
