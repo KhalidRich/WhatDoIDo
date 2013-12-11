@@ -7,9 +7,14 @@
 	<caption> Events are the heart of WhatDoIDo. If you'd liek people to attend your wonderful events, here's the page to add 'em
 	
 	{% if message is defined %}
+	<br><br><br>
 	<div class="alert-success"> {{ message }} </div>
+	<br><br><br>
 	{% endif %}
 	
+	<b> <p>Note: Remember that dates and times need specific formatting. Dates should be entered like so:
+		MONTH/DAY/YEAR. Times should be entered like so: 5:00 PM. So the date 2013/12/04 would be unacceptable... and the
+		time 21:00. Times without the AM/PM declaration are assumed to be morning times.<p></b>
 	</caption>
 
 	<form action="/add_event" method="post" name="addevent">
@@ -38,11 +43,6 @@
 			<tr>
 				<td>End Time:</td>
 				<td>{{form.end_time(size=48)}}</td>
-			</tr>
-
-			<tr>
-				<td>Facebook Link:</td>
-				<td>{{form.fb_link(size=255)}}</td>
 			</tr>
 
 			<tr>

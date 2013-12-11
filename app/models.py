@@ -37,9 +37,9 @@ class Event(db.Model):
 	title = db.Column(db.String(150))
 	hosted_by = db.Column(db.Integer, db.ForeignKey('user._id'))
 	desc = db.Column(db.String(2000))
-	time_start = db.Column(db.String(5))
-	time_end = db.Column(db.String(5))
-	date = db.Column(db.String(11))
+	time_start = db.Column(db.Time)
+	time_end = db.Column(db.Time)
+	date = db.Column(db.Date)
 	capacity = db.Column(db.Integer)
 	attending = db.Column(db.Integer)
 
