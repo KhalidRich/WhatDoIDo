@@ -10,6 +10,9 @@ ROLE_ADMIN = 1
 SEX_MALE = 0
 SEX_FEMALE = 1
 
+IRRELEVANT = 0
+RELEVANT = 1
+
 class User(db.Model):
 	_id = db.Column(db.Integer, primary_key = True)
 	email = db.Column(db.String(120), unique = True)
