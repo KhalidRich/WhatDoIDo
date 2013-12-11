@@ -7,11 +7,10 @@ Current Items Completed:
 - Set up DB
 - Registration Works
 - Event Adding Works
-- Log-In Partially works
+- Log-In Complete
 
 
 Current To-Dos:
-- Finish Log-In (on first page)
 - Event Details Page
 - Event Search Page
 - User Preferences Page
