@@ -20,7 +20,6 @@ def before_request():
 #Home Page
 @app.route('/')
 @app.route('/<signed_in>')
-@login_required
 def index(signed_in=False):
 	user = g.user
 	url_for('static', filename='styles/styles.css')
@@ -29,7 +28,6 @@ def index(signed_in=False):
 #Profile Pages
 
 @app.route('/profile/<user_id>')
-@login_required
 def profile(user_id):
 	user = User.query.filter_by(_id = int(user_id)).first()
 	if (user == None):
@@ -38,7 +36,6 @@ def profile(user_id):
 	return render_template('profile.html', user=user)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
-@login_required
 def edit_profile():
 	form = EditProfileForm()
 	if(form.validate_on_submit()):
@@ -109,38 +106,6 @@ def register():
 	login_user(user)
 	return redirect(url_for('index'))
 
-@app.route('/signin', methods=['GET', 'POST'])
-@oid.loginhandler
-def signin():
-	url_for('static', filename='styles/styles.css')
-	url_for('static', filename='styles/bootstrap/css/bootstrap.min.css')
-	if g.user is not None and g.user.is_authenticated():
-		return redirect(url_for('index'))
-	form = LoginForm()
-	custom_form = CustomRegistrationForm()
-	if (form.validate_on_submit()):
-		session['remember_me'] = form.remember_me.data
-		return oid.try_login(form.openid.data, ask_for=['email'])
-	return render_template('signin.html', title='Sign In', form=form, custom_form=custom_form, providers=app.config['OPENID_PROVIDERS'])
-
-@oid.after_login
-def after_login(resp):
-    if resp.email is None or resp.email == "":
-        flash('Invalid login. Please try again.')
-        return redirect(url_for('login'))
-    user = User.query.filter_by(email = resp.email).first()
-    if user is None:
-        user = User(email = resp.email, role = ROLE_USER)
-        db.session.add(user)
-        db.session.commit()
-    remember_me = False
-    if 'remember_me' in session:
-        remember_me = session['remember_me']
-        session.pop('remember_me', None)
-    login_user(user, remember = remember_me)
-    return redirect(request.args.get('next') or url_for('index'))
-
-
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	if request.method == 'GET':
@@ -148,12 +113,16 @@ def login():
 		return render_template('login.html', title='Log In', form = form)
 	else:
 		form = request.form
-		user = User.query.filter_by(email=form['email'], password=form['pwd']).first()
+		print form.keys()
+		user = User.query.filter_by(email=form['email'], password=form['password']).first()
 		if user is None:
 			error_msg = "Sorry, the login credentials are incorrect. Please try again."
 			return render_template('login.html', form=CustomLoginForm(), error_msg=error_msg)
-		login_user(user, remember = form['remember_me'])
-		return redirect('index.html', username = user.fname)
+		if 'remember_me' in form:
+			login_user(user, remember = form['remember_me'])
+		else:
+			login_user(user)
+		return redirect('index.html')
 
 @app.route('/signout')
 def signout():

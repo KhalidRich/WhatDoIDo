@@ -1,43 +1,22 @@
 {% extends "header.html" %}
 
 {% block content %}
-<script type="text/javascript">
-function set_openid(openid, pr)
-{
-    u = openid.search('<username>')
-    if (u != -1) {
-        // openid requires username
-        user = prompt('Enter your ' + pr + ' username:')
-        openid = openid.substr(0, u) + user
-    }
-    form = document.forms['login'];
-    form.elements['openid'].value = openid
-}
 </script>
 <div class="row">
 <h1>Welcome to WhatToDo.</h1>
-<form action="" method="post" name="login" class="col-md-6">
-
+<form action="/login" method="post" name="login" class="col-md-6">
     {{form.hidden_tag()}}
-    <div class="panel panel-success">
-    	<div class="panel-heading">
-    		<h3 class="panel-title">Sign In With Your Existing Accounts</h3>
-    	</div>
-    	<div class="panel-body">
-    	<p>    	
-	        Please enter your OpenID, or select one of the providers below:<br>
-	        {{form.openid(size=80, class="form-control", placeholder="", style="visibility:hidden")}}
-	        {% for error in form.errors.openid %}
-	        <span style="color: red;">[{{error}}]</span>
-	        {% endfor %}<br>
-	        {% for pr in providers %}
-	        <a class="btn btn-primary" href="javascript:set_openid('{{pr.url}}', '{{pr.name}}');">{{pr.name}}</a>
-	        {% endfor %}
-    	</p>
-    	<p>{{form.remember_me}} Remember Me</p>
-    	<p><input type="submit" value="Sign In" class="btn btn-success"></p>
-		</div>
-	</div>
+    
+    <label for="email"> Email Address </label>
+    {{form.email(placeholder="Email", class="form-control")}}
+
+    <label for="password"> Password </label>
+    {{form.password(placeholder="Password", class="form-control", type="password")}}
+
+    <label for="remember_me"> Remember Me </label>
+    {{form.remember_me(class="form-control")}}
+
+    <input type="submit" value="Sign In" class="btn btn-success" />
 </form>
 
 OR <a href="/signin.html"> Sign Up For a New Account!</a>

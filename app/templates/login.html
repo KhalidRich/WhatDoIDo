@@ -1,17 +1,17 @@
 {% extends "header.html" %}
 {% block content %}
 
-<form action="/login" method="post" >
+<form action="/login" method="post">
 	{{form.hidden_tag()}}
 
 	<label for="email"> Email Address </label>
-	{{form.email(placeholder="Email", class="form-control", name="email")}}
+	{{form.email(placeholder="Email", class="form-control")}}
 
-	<label for="pwd"> Password </label>
-	{{form.email(placeholder="Password", class="form-control", type="password", name="pwd")}}
+	<label for="password"> Password </label>
+	{{form.password(placeholder="Password", class="form-control", type="password")}}
 
 	<label for="remember_me"> Remember Me </label>
-	{{form.remember_me(name="remember_me")}}
+	{{form.remember_me(class="form-control")}}
 
 	<input type="submit" value="Sign In" class="btn btn-success" />
 </form>
