@@ -8,10 +8,10 @@ Current Items Completed:
 - Registration Works
 - Event Adding Works
 - Log-In Complete
+- Event Details Page (sans styles)
 
 
 Current To-Dos:
-- Event Details Page
 - Event Search Page
 - User Preferences Page
 - User Home Page
