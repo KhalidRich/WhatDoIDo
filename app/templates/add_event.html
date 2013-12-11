@@ -4,7 +4,13 @@
 
 <div class="row">
 	<h1> Add an Event</h1>
-	<caption> Events are the heart of WhatDoIDo. If you'd liek people to attend your wonderful events, here's the page to add 'em</caption>
+	<caption> Events are the heart of WhatDoIDo. If you'd liek people to attend your wonderful events, here's the page to add 'em
+	
+	{% if message is defined %}
+	<div class="alert-success"> {{ message }} </div>
+	{% endif %}
+	
+	</caption>
 
 	<form action="/add_event" method="post" name="addevent">
 		{{form.hidden_tag()}}
