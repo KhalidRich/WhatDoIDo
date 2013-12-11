@@ -1,7 +1,29 @@
 {% extends "header.html" %}
 {% block content %}
-	<div class="jumbo">
-		Ever find yourself wondering what is there to do on your campus? Can't really find the events that you're looking for?
-		Try us out by typing in your college and finding relevant events today!
+	<div class="row">
+		<div class="col-md-6">
+			<b>Your Events</b>
+			Here is a list of events that you've created on WhatDoIDo:
+
+			{% for event in user_created_events %}
+			<div class="panel panel-primary">
+				<div class="panel-heading"> <a href='/details/{{event._id}}' class="panel-title">{{event.title}} </a></div>
+				<div class="panel-body">
+					<p>Description: {{event.desc}}</p>
+					<p>Start Time: {{event.time_start}} </p>
+					<p>End Time: {{event.time_end}} </p>
+					<p>Availability: {{event.attending}} / {{event.capacity}}</p>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+
+
+		<div class="col-md-6">
+			<b>Your Schedule For Today</b>
+			Based on your last choice of preferences, here's a list of events we thought would be cool for you today
+		</div>
 	</div>
+
+
 {% endblock %}

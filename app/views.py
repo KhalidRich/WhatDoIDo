@@ -7,7 +7,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
 from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventForm, CustomLoginForm
-from models import User, Event, ROLE_USER, ROLE_ADMIN
+from models import User, Event, AttendanceRelation, ROLE_USER, ROLE_ADMIN
 
 @lm.user_loader
 def load_user(id):
@@ -23,7 +23,16 @@ def before_request():
 def index(signed_in=False):
 	user = g.user
 	url_for('static', filename='styles/styles.css')
-	return render_template('index.html')
+	user_events = []
+	user_created_events = []
+	if hasattr(user, '_id'):
+		attendance_relations = AttendanceRelation.query.filter_by(user_id = user._id)
+
+		for event in attendance_relations:
+			user_events.append(Event.query.filter_by(_id = event.event_id).first())
+
+		user_created_events = Event.query.filter_by(hosted_by=user._id)
+	return render_template('index.html', user_events=user_events, user_created_events=user_created_events)
 
 #Profile Pages
 
@@ -77,7 +86,6 @@ def add_event():
 
 @app.route('/details/<event_id>')
 def details(event_id):
-	url_for('static', filename='styles/styles.css')
 	event = Event.query.filter_by(_id=event_id).first()
 	if event is None:
 		return render_template('error404.html')
