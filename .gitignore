@@ -45,3 +45,5 @@ tmp/*
 db_repository
 db_repository/*
 
+alembic
+alembic/*
