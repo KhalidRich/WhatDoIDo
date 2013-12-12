@@ -4,8 +4,8 @@
 
 import datetime
 
-MONTHS = {"january":1, "february":2, "march":3, "april":4, "may":5, "june":6,
- "july":7, "august":8, "september":9, "october":10, "november":11, "december":12}
+MONTHS = {"January":1, "February":2, "March":3, "April":4, "May":5, "June":6,
+ "July":7, "August":8, "September":9, "October":10, "November":11, "December":12}
 
 def time_format(stime):
 	cindex = stime.find(":")
@@ -16,7 +16,7 @@ def time_format(stime):
 
 	if "PM" not in stime and hour == 12:
 		hour = 0
-	
+
 	minutes = int(stime[cindex+1:cindex+3])
 	return datetime.time(hour, minutes)
 
@@ -26,7 +26,7 @@ def date_format(sdate):
 		return datetime.date(int(args[2]), int(args[0]), int(args[1]))
 	else:
 		args = sdate.split(",")
-		month = MONTHS[args[0][:len(args[0]) - 4]]
+		month = MONTHS[args[0][:len(args[0]) - 3].capitalize()]
 		day = int(args[0][len(args[0]) - 3 : len(args[0])])
 		year = int(args[1])
 		return datetime.date(year, month, day)
