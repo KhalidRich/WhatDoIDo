@@ -37,32 +37,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-<!--         <div class="navbar">
-                <div class="navbar-inner">
-                        <div class="container">
-                                <ul class="nav">
-                                        <li class="active"><a href="/">Home</a></li>
-                                        <li><a href="/profile">Profile</a></li>
-                                        <li><a href="/add_event">Add Events</a></li>
-                                        <li><a href="/search">Event Search</a></li>
-                                        <li><a href="#">My Event List</a></li>
-                                </ul>
 
-
-                                <div class="sign-in-out-up">
-                                        {% if g.user.is_authenticated() %}
-                                        <button type="button" class="btn btn-lg btn-danger" onclick="window.location='/signout'">Sign Out</button>
-
-                                        {% else %}
-                                        <button type="button" class="btn btn-lg btn-success" onclick="window.location='/login'">Sign In</button>
-                                        <button type="button" class="btn btn-lg btn-warning" onclick="window.location='/signup'"> Sign Up</button>
-
-                                        {% endif %}
-                                </div>
-                        </div>
-                </div>
-        </div><!-- /.navbar -->
- -->
 	<div>
 		{% block content %} {% endblock %}
 	</div>

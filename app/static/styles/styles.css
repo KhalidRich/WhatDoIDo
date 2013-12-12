@@ -17,3 +17,7 @@ body{
 .sign-in-out-up{
 	float:right;
 }
+
+body a {
+	color: #FFF;
+}

@@ -31,4 +31,8 @@ def date_format(sdate):
 		year = int(args[1])
 		return datetime.date(year, month, day)
 
-
+def get_time_dict(events):
+	time_dict = {}
+	for event in events:
+		time_list[event._id] = event.time
+	return time_dict

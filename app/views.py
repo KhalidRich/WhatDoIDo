@@ -34,6 +34,8 @@ def index(signed_in=False):
 			user_events.append(Event.query.filter_by(_id = event.event_id).first())
 
 		user_created_events = Event.query.filter_by(hosted_by=user._id)
+	url_for('static', filename="styles/styles.css")
+	url_for('static', filename="styles/bootstrap/css/bootstrap.min.css")
 	return render_template('index.html', user_events=user_events, user_created_events=user_created_events)
 
 #Profile Pages
@@ -86,13 +88,23 @@ def add_event():
 	else:
 		return render_template('error404.html')
 
-@app.route('/details/<event_id>')
+@app.route('/details/<event_id>', methods=['GET', 'POST'])
 def details(event_id):
 	event = Event.query.filter_by(_id=event_id).first()
+
+	if request.method == 'POST':
+		ar = AttendanceRelation(user_id=g.user._id, event_id=event_id, attending=1, relevant=1)
+		db.session.add(ar)
+		db.session.commit()
+		return render_template('event_details', msg=string_utils.REGISTRATION_SUCCESS, event=event, ar=ar)
+
+	ar = AttendanceRelation.query.filter(event_id=event_id, user_id=g.user._id).first()
+
 	if event is None:
 		return render_template('error404.html')
+
 	else:
-		return render_template('event_details.html', event=event)
+		return render_template('event_details.html', event=event, ar=ar)
 
 #Signup and signin pages
 @app.route('/signup', methods=['GET', 'POST'])
