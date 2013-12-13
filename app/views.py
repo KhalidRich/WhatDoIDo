@@ -23,6 +23,8 @@ def before_request():
 @app.route('/')
 @app.route('/<signed_in>')
 def index(signed_in=False):
+	url_for('static', filename="styles/styles.css")
+	url_for('static', filename="styles/bootstrap/css/bootstrap.min.css")
 	user = g.user
 	url_for('static', filename='styles/styles.css')
 	user_events = []
@@ -34,8 +36,8 @@ def index(signed_in=False):
 			user_events.append(Event.query.filter_by(_id = event.event_id).first())
 
 		user_created_events = Event.query.filter_by(hosted_by=user._id)
-	url_for('static', filename="styles/styles.css")
-	url_for('static', filename="styles/bootstrap/css/bootstrap.min.css")
+	else:
+		return render_template('home.html')
 	return render_template('index.html', user_events=user_events, user_created_events=user_created_events)
 
 #Profile Pages
