@@ -1,6 +1,8 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, TextAreaField
+from wtforms import TextField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import Required, Length
+
+import utils.string_utils as string_utils
 
 class LoginForm(Form):
     openid = TextField('openid')
@@ -35,4 +37,4 @@ class AddEventForm(Form):
 	fb_link = TextField('fb_link', validators=[Required()])
 	capacity = TextField('capacity', validators=[Required()])
 	hosted_by = TextField('hosted_by', validators=[Required()])
-	event_type = TextField('event_type', validators=[Required()])
+	event_type = SelectField('event_type', choices=string_utils.EVENT_TYPES, validators=[Required()])
