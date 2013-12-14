@@ -4,7 +4,7 @@
 		<h1>Today's Events</h1>
 		<div class="col-md-6">
 			<b>Your Events</b><br>
-			Here's a list of the events you've created for today:
+			Here's a list of the events you've created for today:<br><br>
 
 			{% for event in user_created_events %}
 			<div class="panel panel-primary">
@@ -23,7 +23,19 @@
 
 		<div class="col-md-6">
 			<b>Today's Recommended Schedule</b><br>
-			Based on your last choice of preferences, here's a list of events we thought would be cool for you today
+			Here are your registered and recommended events:<br><br>
+			{% for event in user_events %}
+			<div class="panel panel-primary">
+				<div class="panel-heading"> <a href="/details/{{event._id}}" class="panel-title">{{event.title}} </a></div>
+				<div class="panel-body">
+					<p>Description: {{event.desc}}</p>
+					<p>Date: {{event.date}} </p>
+					<p>Start Time: {{event.time_start}} </p>
+					<p>End Time: {{event.time_end}} </p>
+					<p>Availability: {{event.attending}} / {{event.capacity}}</p>
+				</div>
+			</div>
+			{% endfor %}
 		</div>
 	</div>
 

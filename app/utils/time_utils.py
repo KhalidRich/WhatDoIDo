@@ -36,3 +36,12 @@ def get_time_dict(events):
 	for event in events:
 		time_list[event._id] = event.time
 	return time_dict
+
+'''
+Determines whether some event is today.
+'''
+def is_an_event_today(event):
+	mtoday = datetime.date.today()
+	mtmrw = mtoday.replace(day=mtoday.day+1)
+	print event.date
+	return event.date >= mtoday and event.date < mtmrw

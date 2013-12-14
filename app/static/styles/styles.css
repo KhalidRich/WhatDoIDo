@@ -21,3 +21,7 @@ body{
 body a {
 	color: #FFF;
 }
+
+form {
+	text-align: center;
+}

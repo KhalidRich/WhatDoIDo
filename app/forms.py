@@ -28,7 +28,7 @@ class EditProfileForm(Form):
 
 class AddEventForm(Form):
 	title = TextField('title', validators = [Required()])
-	description = TextField('description', validators=[Required()])
+	description = TextAreaField('description', validators=[Required()])
 	date = TextField('date', validators=[Required()])
 	start_time = TextField('start_time', validators=[Required()])
 	end_time = TextField('end_time', validators=[Required()])

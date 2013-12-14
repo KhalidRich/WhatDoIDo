@@ -27,7 +27,9 @@
 
 	{% if ar is not defined %}
 		<h1><a href= class="label label-default">NOT REGISTERED</span></h1>
-		It appears that you are not registered for this event. 
+		It appears that you are not registered for this event. Would you like to register?
+		<form action="/details/{{event._id}}" method="post"><input type="submit" value="Register for Event" class="btn btn-success"/>
+	{% endif %} 
 </div>
 
 {% endblock %}

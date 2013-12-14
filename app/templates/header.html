@@ -25,11 +25,11 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	{% if g.user.is_authenticated() %}
-                <button type="button" class="btn btn-lg btn-danger" onclick="window.location='/signout'">Sign Out</button>
+                <button type="button" class="btn btn-danger" onclick="window.location='/signout'">Sign Out</button>
 
             {% else %}
-                <button type="button" class="btn btn-lg btn-success" onclick="window.location='/login'">Sign In</button>
-                <button type="button" class="btn btn-lg btn-warning" onclick="window.location='/signup'"> Sign Up</button>
+                <button type="button" class="btn btn-success" onclick="window.location='/login'">Sign In</button>
+                <button type="button" class="btn btn-warning" onclick="window.location='/signup'"> Sign Up</button>
 
             {% endif %}
           </ul>

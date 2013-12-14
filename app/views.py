@@ -32,10 +32,15 @@ def index(signed_in=False):
 	if hasattr(user, '_id'):
 		attendance_relations = AttendanceRelation.query.filter_by(user_id = user._id)
 
-		for event in attendance_relations:
-			user_events.append(Event.query.filter_by(_id = event.event_id).first())
-
-		user_created_events = Event.query.filter_by(hosted_by=user._id)
+		for relation in attendance_relations:
+			event = Event.query.filter_by(_id=relation.event_id).first()
+			if time_utils.is_an_event_today(event):
+				user_events.append(Event.query.filter_by(_id = event._id).first())
+ 
+		created_events = Event.query.filter_by(hosted_by=user._id)
+		for event in created_events:
+			if time_utils.is_an_event_today(event):
+				user_created_events.append(event)
 	else:
 		return render_template('home.html')
 	return render_template('index.html', user_events=user_events, user_created_events=user_created_events)
@@ -96,14 +101,18 @@ def details(event_id):
 
 	if request.method == 'POST':
 		ar = AttendanceRelation(user_id=g.user._id, event_id=event_id, attending=1, relevant=1)
+		event.attending += 1
 		db.session.add(ar)
 		db.session.commit()
-		return render_template('event_details', msg=string_utils.REGISTRATION_SUCCESS, event=event, ar=ar)
+		return render_template('event_details.html', msg=string_utils.REGISTRATION_SUCCESS, event=event, ar=ar)
 
-	ar = AttendanceRelation.query.filter(event_id=event_id, user_id=g.user._id).first()
+	ar = AttendanceRelation.query.filter_by(event_id=event_id, user_id=g.user._id).first()
 
 	if event is None:
 		return render_template('error404.html')
+
+	if not hasattr(ar, 'event_id'):
+		return render_template('event_details.html', event=event)
 
 	else:
 		return render_template('event_details.html', event=event, ar=ar)
