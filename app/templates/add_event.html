@@ -46,6 +46,11 @@
 			</tr>
 
 			<tr>
+				<td>Event Type:</td>
+				<td>{{form.event_type(size=25)}}</td>
+			</tr>
+
+			<tr>
 				<td>Capacity:</td>
 				<td>{{form.capacity(size=10)}}</td>
 			</tr>
@@ -58,4 +63,9 @@
 
 		<input type="submit" value="Create Event" class="btn btn-success" />
 </div>
+
+<script>
+	$("#home-btn").removeClass("active");
+	$("#add-btn").addClass("active");
+</script>
 {% endblock %}

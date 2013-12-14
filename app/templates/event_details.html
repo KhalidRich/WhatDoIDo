@@ -12,6 +12,9 @@
 	</div>
 
 	<div class="col-md-6">
+		<b>Event Date: </b>
+		{{event.date}}
+		<br><br>
 		<b>Event Time: </b>
 		{{event.time_start}}
 		<br><br>
@@ -21,6 +24,10 @@
 		<b>Current Event Occupancy</b>
 		{{event.attending}} / {{event.capacity}}
 	</div>
+
+	{% if ar is not defined %}
+		<h1><a href= class="label label-default">NOT REGISTERED</span></h1>
+		It appears that you are not registered for this event. 
 </div>
 
 {% endblock %}

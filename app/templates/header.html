@@ -18,11 +18,10 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/add_event">Add Events</a></li>
-                <li><a href="/search">Event Search</a></li>
-                <li><a href="#">My Event List</a></li>
+            <li id="home-btn" class="active"><a href="/">Home</a></li>
+                <li id="prof-btn"><a href="/profile">Profile</a></li>
+                <li id="add-btn"><a href="/add_event">Add Events</a></li>
+                <li id="search-btn"><a href="/search">Event Search</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	{% if g.user.is_authenticated() %}

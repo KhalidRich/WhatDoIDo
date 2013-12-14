@@ -35,3 +35,4 @@ class AddEventForm(Form):
 	fb_link = TextField('fb_link', validators=[Required()])
 	capacity = TextField('capacity', validators=[Required()])
 	hosted_by = TextField('hosted_by', validators=[Required()])
+	event_type = TextField('event_type', validators=[Required()])

@@ -43,7 +43,7 @@ class Event(db.Model):
 	time_start = db.Column(db.Time)
 	time_end = db.Column(db.Time)
 	date = db.Column(db.Date)
-	# event_type = db.Column(db.String(25))
+	event_type = db.Column(db.String(25))
 	capacity = db.Column(db.Integer)
 	attending = db.Column(db.Integer)
 
@@ -66,8 +66,8 @@ class Event(db.Model):
 	def edit_capacity(self, cap):
 		self.capacity = cap
 
-	# def get_event_type(self):
-	# 	return self.event_type
+	def get_event_type(self):
+		return self.event_type
 
 class AttendanceRelation(db.Model):
 	event_id = db.Column(db.Integer, db.ForeignKey('event._id'), primary_key=True)
