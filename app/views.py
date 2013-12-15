@@ -6,10 +6,10 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventForm, CustomLoginForm
+from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventForm, CustomLoginForm, UserPreferenceForm
 from models import User, Event, AttendanceRelation, ROLE_USER, ROLE_ADMIN
 
-from utils import time_utils, string_utils
+from utils import time_utils, string_utils, schedule_utils
 
 @lm.user_loader
 def load_user(id):
@@ -75,6 +75,22 @@ def edit_profile():
 		form.school.data = g.user.school
 		form.sex.data = g.user.sex
 	return render_template('edit_profile.html', form=form)
+
+@app.route('/preferences', methods=['GET', 'POST'])
+def preferences():
+	user = User.query.filter_by(_id=int(g.user._id)).first()
+	if request.method == 'GET':
+		form = UserPreferenceForm()
+		return render_template('preferences.html', preferences=user.preferences, form=form, msg=string_utils.USER_PREFERENCES_SUCCESS)
+	elif request.method == 'POST':
+		form = request.form
+		print form.keys()
+		user.preferences = schedule_utils.binaryize_preferences(form)
+		db.session.commit()
+		return redirect(url_for('preferences'))
+	else:
+		return redirect(url_for('forbidden'))
+
 
 #Add Events page
 @app.route('/add_event', methods=['GET', 'POST'])

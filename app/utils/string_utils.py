@@ -3,9 +3,10 @@ string_utils.py
 Helper functions for strings and stuff
 '''
 
+''' Success Messages '''
 REGISTRATION_SUCCESS = "Congrats! You successfully registered for this event!"
-
 EVENT_ADD_SUCCESS = "Congrats! You sucessfully added your first event!"
+USER_PREFERENCES_SUCCESS = "Congrats! You successfully added/edited your preferences."
 
 EVENT_TYPES = [("Performing Arts", "Performing Arts"), ("Academic", "Academic"), ("Cultural", "Cultural"), ("Environmental",
 	"Environmental"), ("Visual Arts", "Visual Arts"), ("Gender and Sexuality", "Gender and Sexuality"), ("Student Government",

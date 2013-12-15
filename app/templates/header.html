@@ -2,6 +2,8 @@
 <head>
 	<link href="static/styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="static/styles/styles.css" rel="stylesheet">
+  <script src="static/scripts/utils.js"></script>  
+  <script src="http://code.jquery.com/jquery.js"></script>
 </head>
 <body class="container">
 	    <!-- Fixed navbar -->
@@ -19,9 +21,10 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li id="home-btn" class="active"><a href="/">Home</a></li>
-                <li id="prof-btn"><a href="/profile">Profile</a></li>
-                <li id="add-btn"><a href="/add_event">Add Events</a></li>
-                <li id="search-btn"><a href="/search">Event Search</a></li>
+            <li id="prof-btn"><a href="/profile">Profile</a></li>
+            <li id="add-btn"><a href="/add_event">Add Events</a></li>
+            <li id="search-btn"><a href="/search">Event Search</a></li>
+            <li id="pref-btn"><a href="/preferences">My Preferences </a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	{% if g.user.is_authenticated() %}
@@ -41,8 +44,6 @@
 		{% block content %} {% endblock %}
 	</div>
 
-	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="static/styles/bootstrap/js/bootstrap.min.js"></script>
-	<script src="static/scripts/utils.js"></script>
 </body>
 </html>

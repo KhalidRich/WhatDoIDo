@@ -1,0 +1,110 @@
+{% extends "header.html" %}
+{% block content %}
+	<h1> User Preferences </h1>
+	Here, users can state their event preferences. This is important, since you'll need preferences to actually get good recommendations. Currently, your preferences consider your preferred event type and time of day. 
+
+	<form action="/preferences" method="post">
+		<table>
+			<tr>
+				<td><b>Event Type</b><br><br></td>
+			</tr>
+
+			<tr>
+				<td>Performing Arts:</td>
+				<td>{{form.performing_arts(id="performing_arts")}}</td>
+			</tr>
+
+			<tr>
+				<td>Academic:</td>
+				<td>{{form.academic(id="academic")}}</td>
+			</tr>
+
+			<tr>
+				<td>Sports:</td>
+				<td>{{form.sports(id="sports")}}</td>
+			</tr>
+
+			<tr>
+				<td>Cultural:</td>
+				<td>{{form.cultural(id="cultural")}}</td>
+			</tr>
+
+			<tr>
+				<td>Environmental:</td>
+				<td>{{form.environmental(id="environmental")}}</td>
+			</tr>
+
+			<tr>
+				<td>Visual Arts:</td>
+				<td>{{form.arts(id="arts")}}</td>
+			</tr>
+
+			<tr>
+				<td>Gender and Sexuality:</td>
+				<td>{{form.gensex(id="gensex")}}</td>
+			</tr>
+
+			<tr>
+				<td>Student Government</td>
+				<td>{{form.stugovt(id="stugovt")}}</td>
+			</tr>
+
+			<tr>
+				<td>Greek:</td>
+				<td>{{form.greek(id="greek")}}</td>
+			</tr>
+
+			<tr>
+				<td>Media and Publications:</td>
+				<td>{{form.media(id="media")}}</td>
+			</tr>
+
+			<tr>
+				<td>Political</td>
+				<td>{{form.political(id="political")}}</td>
+			</tr>
+
+			<tr>
+				<td>Religious and Spiritual</td>
+				<td>{{form.religious(id="religious")}}</td>
+			</tr>
+
+			<tr>
+				<td>Community Service</td>
+				<td>{{form.service(id="service")}}</td>
+			</tr>
+
+			<tr>
+				<td>Special Interest</td>
+				<td>{{form.spinterest(id="spinterest")}}</td>
+			</tr>
+
+			<tr>
+				<td><br><br><b>Time of Day<br><br></b></td>
+			</tr>
+
+			<tr>
+				<td>Earlier:</td>
+				<td>{{form.early(id="early")}}</td>
+			</tr>
+
+			<tr>
+				<td>Midday:</td>
+				<td>{{form.midday(id="midday")}}</td>
+			</tr>
+
+			<tr>
+				<td>Later:</td>
+				<td>{{form.late(id="late")}}</td>
+			</tr>
+		</table>
+
+		<input type="submit" value="Edit Preferences" class="btn btn-success" />
+	</form>
+
+	{% if preferences is not none %}
+		<script>
+			init_form("" + {{preferences}});
+		</script>
+	{% endif %}
+{% endblock %}

@@ -5,6 +5,10 @@ schedule_utils.py
 
 This helps create correct schedules for users
 '''
+
+PREFERENCE_FIELDS = ["performing_arts", "academic", "sports", "cultural", "environmental", "arts", "gensex", "stugovt", "greek"]
+PREFERENCE_FIELDS.extend(["media", "political", "religious", "service", "spinterest", "early", "late", "midday"])
+
 def create_schedule(events):
 	schedule = []
 	while(True):
@@ -18,3 +22,15 @@ def create_schedule(events):
 					next_event = event
 		if next_event is None:
 			return schedule
+
+def binarized_schedule_default():
+	return "0"*15
+
+def binaryize_preferences(form):
+	binpref = ""
+	for preference in PREFERENCE_FIELDS:
+		if preference in form.keys():
+			binpref += "1"
+		else:
+			binpref += "0"
+	return binpref

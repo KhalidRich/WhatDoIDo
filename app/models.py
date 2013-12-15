@@ -22,6 +22,7 @@ class User(db.Model):
 	sex = db.Column(db.SmallInteger)
 	role = db.Column(db.SmallInteger, default=ROLE_USER)
 	password = db.Column(db.String(25))
+	preferences = db.Column(db.String(15))
 
 	def get_id(self):
 		return unicode(self._id)
