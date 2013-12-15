@@ -7,7 +7,7 @@ This helps create correct schedules for users
 '''
 
 PREFERENCE_FIELDS = ["performing_arts", "academic", "sports", "cultural", "environmental", "arts", "gensex", "stugovt", "greek"]
-PREFERENCE_FIELDS.extend(["media", "political", "religious", "service", "spinterest", "early", "late", "midday"])
+PREFERENCE_FIELDS.extend(["media", "political", "religious", "service", "spinterest", "early", "midday", "late"])
 
 def create_schedule(events):
 	schedule = []
@@ -24,7 +24,7 @@ def create_schedule(events):
 			return schedule
 
 def binarized_schedule_default():
-	return "0"*15
+	return "0"*17
 
 def binaryize_preferences(form):
 	binpref = ""
@@ -33,4 +33,5 @@ def binaryize_preferences(form):
 			binpref += "1"
 		else:
 			binpref += "0"
+	print len(binpref)
 	return binpref

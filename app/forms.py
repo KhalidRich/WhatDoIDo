@@ -55,5 +55,5 @@ class UserPreferenceForm(Form):
 	service = BooleanField('service')
 	spinterest = BooleanField('spinterest')
 	early = BooleanField('early')
-	late = BooleanField('late')
 	midday = BooleanField('midday')
+	late = BooleanField('late')

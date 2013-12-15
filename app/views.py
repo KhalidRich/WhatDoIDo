@@ -10,6 +10,7 @@ from forms import LoginForm, EditProfileForm, CustomRegistrationForm, AddEventFo
 from models import User, Event, AttendanceRelation, ROLE_USER, ROLE_ADMIN
 
 from utils import time_utils, string_utils, schedule_utils
+import time
 
 @lm.user_loader
 def load_user(id):
@@ -103,7 +104,7 @@ def add_event():
 		#add the new event; redirect to the event add form with message "Your event has been added"
 		form = request.form
 		event = Event(title=form['title'], _id=Event.query.count() + 1, hosted_by=g.user._id, desc=form['description'], time_start=time_utils.time_format(form['start_time']),
-			time_end=time_utils.time_format(form['end_time']), date=time_utils.date_format(form['date']), capacity=string_utils.cint(form['capacity']), attending=0, event_type=form['event_type'])
+			time_end=time_utils.time_format(form['end_time']), date=time_utils.date_format(form['date']), capacity=string_utils.cint(form['capacity']), attending=0, event_type=form['event_type'], preferences=schedule_utils.binarized_schedule_default())
 		db.session.add(event)
 		db.session.commit()
 		new_form = AddEventForm()
