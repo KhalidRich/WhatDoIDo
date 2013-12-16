@@ -24,19 +24,14 @@ def before_request():
 @app.route('/')
 @app.route('/<signed_in>')
 def index(signed_in=False):
-	url_for('static', filename="styles/styles.css")
-	url_for('static', filename="styles/bootstrap/css/bootstrap.min.css")
 	user = g.user
-	url_for('static', filename='styles/styles.css')
 	user_events = []
 	user_created_events = []
+
 	if hasattr(user, '_id'):
 		attendance_relations = AttendanceRelation.query.filter_by(user_id = user._id)
-
-		for relation in attendance_relations:
-			event = Event.query.filter_by(_id=relation.event_id).first()
-			if time_utils.is_an_event_today(event):
-				user_events.append(Event.query.filter_by(_id = event._id).first())
+		attendance_recommendations = schedule_utils.get_recommendations(user)
+		schedule = schedule_utils.create_schedule(attendance_relations, attendance_recommendations)
  
 		created_events = Event.query.filter_by(hosted_by=user._id)
 		for event in created_events:
@@ -44,7 +39,7 @@ def index(signed_in=False):
 				user_created_events.append(event)
 	else:
 		return render_template('home.html')
-	return render_template('index.html', user_events=user_events, user_created_events=user_created_events)
+	return render_template('index.html', user_events=schedule, user_created_events=user_created_events)
 
 #Profile Pages
 
