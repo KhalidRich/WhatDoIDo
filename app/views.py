@@ -99,7 +99,7 @@ def add_event():
 		#add the new event; redirect to the event add form with message "Your event has been added"
 		form = request.form
 		event = Event(title=form['title'], _id=Event.query.count() + 1, hosted_by=g.user._id, desc=form['description'], time_start=time_utils.time_format(form['start_time']),
-			time_end=time_utils.time_format(form['end_time']), date=time_utils.date_format(form['date']), capacity=string_utils.cint(form['capacity']), attending=0, event_type=form['event_type'], preferences=schedule_utils.binarized_schedule_default())
+			time_end=time_utils.time_format(form['end_time']), date=time_utils.date_format(form['date']), capacity=string_utils.cint(form['capacity']), attending=0, event_type=form['event_type'])
 		db.session.add(event)
 		db.session.commit()
 		new_form = AddEventForm()
@@ -149,7 +149,7 @@ def register():
 	form = request.form
 	if form is None:
 		return render_template('error404.html')
-	user = User(email=form['email'], fname=form['fname'], lname=form['lname'], school=form['school'], password=form['pwd'])
+	user = User(email=form['email'], fname=form['fname'], lname=form['lname'], school=form['school'], password=form['pwd'], preferences="0"*15)
 	db.session.add(user)
 	db.session.commit()
 	login_user(user)

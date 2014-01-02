@@ -23,6 +23,7 @@ class User(db.Model):
 	role = db.Column(db.SmallInteger, default=ROLE_USER)
 	password = db.Column(db.String(25))
 	preferences = db.Column(db.String(15))
+	#last_recommendation = db.Column(db.DateTime)
 
 	def get_id(self):
 		return unicode(self._id)
@@ -75,6 +76,8 @@ class AttendanceRelation(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user._id'), primary_key=True)
 	attending = db.Column(db.Integer)
 	relevant = db.Column(db.Integer)
+	# anticipation = db.Column(db.Integer)
+	# rating = db.Column(db.Integer)
 
 	def is_attending(self):
 		return self.attending

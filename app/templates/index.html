@@ -26,13 +26,13 @@
 			Here are your registered and recommended events:<br><br>
 			{% for event in user_events %}
 			<div class="panel panel-primary">
-				<div class="panel-heading"> <a href="/details/{{event._id}}" class="panel-title">{{event.title}} </a></div>
+				<div class="panel-heading"> <a href="/details/{{event._id}}" class="panel-title">{{event[0].title}} </a></div>
 				<div class="panel-body">
-					<p>Description: {{event.desc}}</p>
-					<p>Date: {{event.date}} </p>
-					<p>Start Time: {{event.time_start}} </p>
-					<p>End Time: {{event.time_end}} </p>
-					<p>Availability: {{event.attending}} / {{event.capacity}}</p>
+					<p>Description: {{event[0].desc}}</p>
+					<p>Date: {{event[0].date}} </p>
+					<p>Start Time: {{event[0].time_start}} </p>
+					<p>End Time: {{event[0].time_end}} </p>
+					<p>Availability: {{event[0].attending}} / {{event[0].capacity}}</p>
 				</div>
 			</div>
 			{% endfor %}
